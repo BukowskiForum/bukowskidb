@@ -1,2 +1,2 @@
 # Manuscript Index
-{{ generate_index() }}
+{{ generate_index(manuscripts) }}

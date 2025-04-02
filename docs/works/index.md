@@ -1,2 +1,2 @@
 # Works Index
-{{ generate_index() }}
+{{ generate_index(works) }}
