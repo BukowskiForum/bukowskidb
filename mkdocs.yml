@@ -1,5 +1,5 @@
 site_name: Bukowski Database
-site_url: https://bukowskiforum.com
+site_url: https://bukowskiforum.github.io/bukowskidb/
 theme:
   name: material
   custom_dir: overrides
