@@ -1,2 +1,2 @@
 # Broadside Index
-{{ generate_index(broadsides) }}
+{{ generate_index("broadsides") }}

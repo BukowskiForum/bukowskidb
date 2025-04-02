@@ -1,2 +1,2 @@
 # Magazine Index
-{{ generate_index(magazines) }}
+{{ generate_index("magazines") }}

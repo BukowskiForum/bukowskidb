@@ -1,2 +1,2 @@
 # Recording Event Index
-{{ generate_index(recordings) }}
+{{ generate_index("recordings") }}
