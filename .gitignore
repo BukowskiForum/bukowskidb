@@ -1,0 +1,10 @@
+*.php
+*.sql
+*.inc
+/site
+/scripts
+/.cache
+/_oldmd_docs
+/__pycache__
+/json_db
+/lib

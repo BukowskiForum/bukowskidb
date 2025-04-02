@@ -1,0 +1,23 @@
+---
+manuscript_id: 1467
+manuscript_title: going
+dated: '1991'
+circa: 1991-1992
+method: printout
+manuscript_type: poem
+image: poem1991-00-00-going.jpg
+notes: null
+works_included:
+- work_id: 1348
+  altered: 'no'
+  edited: 'no'
+- work_id: 1344
+  altered: 'yes'
+  edited: 'no'
+---
+
+{{ section_title() }}
+{{ manuscript_info() }}
+{{ section_image() }}
+{{ notes_section() }}
+{{ works_section() }}

@@ -1,0 +1,26 @@
+---
+work_id: 5412
+work_title: Notes of a Dirty Old Man
+work_written: '1972'
+written_date: exact
+work_collected: 'yes'
+work_category: Story
+notes: null
+icon: material/book
+alternate_versions:
+- 2176
+---
+
+{{ section_title() }}
+{{ work_info() }}
+{{ notes_section() }}
+## Excerpt
+!!! quote "Notes of a Dirty Old Man"
+    I was sitting in a bar on Western Ave. It was around midnight and I was in my usual confused state. I mean, you know, nothing works right: the women, the jobs, the no jobs, the weather, the dogs. Finally you just sit in a kind of stricken state and wait like you're on the bus stop bench waiting for death...
+
+## External Links
+- [Scan of magazine appearance (NOLA Express)](https://www.jstor.org/action/doBasicSearch?Query=%22nola+express%22)
+- [Scan of magazine appearance (Los Angeles Free Press)](https://www.jstor.org/action/doBasicSearch?Query=pt%3A%28%22Los+Angeles+Free+Press%22%29)
+
+{{ appearances_section() }}
+{{ alternate_versions_section() }}

@@ -1,0 +1,16 @@
+---
+work_id: 5183
+work_title: Rip-off
+work_written: '1976'
+written_date: approximate
+work_collected: 'no'
+work_category: Poem
+notes: null
+alternate_versions: []
+---
+
+{{ section_title() }}
+{{ work_info() }}
+{{ notes_section() }}
+{{ appearances_section() }}
+{{ alternate_versions_section() }}

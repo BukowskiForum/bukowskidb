@@ -1,0 +1,40 @@
+---
+magazine_id: 724
+magazine_title: Aileron
+pub_date: '1984'
+volume: '5'
+number: 2
+month: ''
+notes: null
+pub_date1: 31/12/1984
+pub_date2: null
+image: null
+works_included:
+- work_id: 4446
+  magazine_page: ''
+  published_as: ''
+- work_id: 3005
+  magazine_page: ''
+  published_as: ''
+- work_id: 4447
+  magazine_page: ''
+  published_as: ''
+- work_id: 526
+  magazine_page: ''
+  published_as: ''
+- work_id: 1246
+  magazine_page: ''
+  published_as: ''
+- work_id: 4449
+  magazine_page: ''
+  published_as: ''
+- work_id: 4448
+  magazine_page: ''
+  published_as: ''
+---
+
+{{ section_title() }}
+{{ magazine_info() }}
+{{ section_image() }}
+{{ notes_section() }}
+{{ works_section() }}

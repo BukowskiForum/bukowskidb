@@ -1,0 +1,19 @@
+---
+work_id: 1834
+work_title: Let's Be Original
+work_written: '1974'
+written_date: exact
+work_collected: 'no'
+work_category: Poem
+notes: null
+alternate_versions: []
+---
+
+{{ section_title() }}
+{{ work_info() }}
+{{ notes_section() }}
+## Forum References
+- [Scan of magazine appearance](https://bukowskiforum.com/threads/utah-lets-be-original-wormwood-review-no-64-1976.12756/)
+
+{{ appearances_section() }}
+{{ alternate_versions_section() }}

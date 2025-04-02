@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ super() }}
+
+{# Consolidated "Obtain this item" section #}
+{# Check if it's in a relevant section AND not an index page #}
+{% if (page.url.startswith('books/') or 
+      page.url.startswith('magazines/') or 
+      page.url.startswith('recordings/')) and 
+      page.file.name != 'index' %}
+
+    {# Determine item type for heading #}
+    {% set item_type = "item" %} {# Default #}
+    {% if page.url.startswith('books/') %}
+        {% set item_type = "book" %}
+    {% elif page.url.startswith('recordings/') %}
+        {% set item_type = "recording" %}
+    {% elif page.url.startswith('magazines/') %}
+        {% set item_type = "magazine" %}
+    {% endif %}
+
+    <h2>Obtain this {{ item_type }}</h2>
+    <ul>
+        {# Library Link(s) - Specific logic per type #}
+        
+        {# --- BOOKS --- #}
+        {% if page.url.startswith('books/') and page.meta.book_title %}
+            {% set author = "Charles+Bukowski" %}
+            {% set title = page.meta.book_title.replace(" ", "+") %}
+            {% set worldcat_url = "https://www.worldcat.org/search?q=ti%3A" ~ title ~ "+au%3A" ~ author %}
+            <li><a href="{{ worldcat_url }}" target="_blank" rel="noopener">Search your library for "{{ page.meta.book_title }}"</a></li>
+            
+        {# --- RECORDINGS --- #}
+        {% elif page.url.startswith('recordings/') and page.meta.releases %}
+            {% for release in page.meta.releases %}
+                {# Only create link if BOTH title and format exist #}
+                {% if release.recording_title and release.release_format %}
+                    {% set author = "Charles+Bukowski" %}
+                    {% set release_title = release.recording_title.replace(" ", "+") %}
+                    {% set worldcat_url = "https://www.worldcat.org/search?q=ti%3A" ~ release_title ~ "+au%3A" ~ author %}
+                    <li><a href="{{ worldcat_url }}" target="_blank" rel="noopener">Search your library for "{{ release.recording_title }}"</a></li>
+                {% endif %}
+            {% endfor %}
+
+        {# --- MAGAZINES --- #}
+        {% elif page.url.startswith('magazines/') and page.meta.magazine_title %}
+            {# WorldCat Link for Holdings #}
+            {% set title_wc = page.meta.magazine_title.replace(" ", "+") %}
+            {% set worldcat_url = "https://www.worldcat.org/search?q=ti%3A" ~ title_wc %}
+            <li><a href="{{ worldcat_url }}" target="_blank" rel="noopener">Search libraries for "{{ page.meta.magazine_title }}"</a></li>
+            {# Internet Archive Link for Digitized Issues #}
+            {% set title_ia = page.meta.magazine_title | urlencode %}
+            {% set ia_url = "https://archive.org/details/periodicals?tab=collection&query=%22" ~ title_ia ~ "%22" %}
+            <li><a href="{{ ia_url }}" target="_blank" rel="noopener">Search for digitized issues</a></li>
+        {% endif %}
+
+        {# Collector Link - For all relevant types #}
+        <li>If it's hard to find, <a href="https://bukowskiforum.com/forums/buy-sell-trade-want-lists-ebay.6/" target="_blank" rel="noopener">ask around.</a></li>
+    </ul>
+
+{% endif %}
+{% endblock %}

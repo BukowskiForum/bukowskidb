@@ -1,0 +1,22 @@
+---
+work_id: 2490
+work_title: Prescience
+work_written: '1992'
+written_date: approximate
+work_collected: 'yes'
+work_category: Poem
+notes: null
+icon: material/book
+alternate_versions: []
+---
+
+{{ section_title() }}
+{{ work_info() }}
+{{ notes_section() }}
+## Forum References
+- [Scan of magazine appearance](https://bukowskiforum.com/threads/prescience.6222/)
+
+{{ appearances_section() }}
+{{ alternate_versions_section() }}
+## Comparisons
+- [Compare "Prescience"](https://bukowski.net/comparisons/prescience.php)
