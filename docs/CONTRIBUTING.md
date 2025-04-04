@@ -26,6 +26,8 @@ notes: Written in San Pedro, CA
 ---
 ```
 
+Usually that's the only section you'll want to edit. 
+
 Content below these lines are usually macros, which are used to generate a design and related content. Macros look like this:
 
 {% raw %}
@@ -52,7 +54,7 @@ Adding something below or in-between these macros will add it to the page. For e
 ```
 {% endraw %}
 
-## Adding new book, manuscript, work, etc.
+## Adding a new book, manuscript, work, etc.
 Pick out a new, unique `internal id` for the new item. Sequential ids are preferred. The easiest way to find one is to sort an [index on the website](books/index.md) by internal id.
 
 After you've chosen an id, go to the [docs folder in the repository](https://github.com/BukowskiForum/bukowskidb/tree/main/docs), select the folder of the content type you want to add, then click "add file". The filename should not contain any spaces nor more than 50 characters, and it should end with a dash and the internal id number, like this: `ham-on-rye-37.md`.
