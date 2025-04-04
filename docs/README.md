@@ -1,9 +1,9 @@
 # Bukowski Database Notes
-- This database is mutable by you, and I encourage you to contribute, even if you've never used git. Read contribution guide, discuss changes.
-- This database is a gift largely from Hannah, and others mentioned in the original notes below. It was converted from php/sql into mkdocs for ease of communal editing. 
-- I attempted to preserve all the data. That includes things I don't quite understand, such as the work label "collected" and book label "major". That also includes things that no longer work, such as soundcloud track ids. Should we keep them? Remove them?
+- You can (and should) edit this site, even if you've never used git. Read the [contribution guide](CONTRIBUTING.md), and [discuss the database](https://bukowskiforum.com/threads/database-updated.5438/).
+- This database is a gift from Hannah and others mentioned in the original notes below. It was recently converted from php/sql into mkdocs.
+- I attempted to preserve all the data. That includes things I don't quite understand, such as the work label "collected" and book label "major". That also includes things that no longer work, such as soundcloud track ids. Should we keep them? Remove them? Let's discuss.
 
-- The following notes were from the original database, and are preserved for the sake of context.
+- The following notes were from the original database, 
 
 !!! quote "Old Database Notes"
     - For the sake of consistency the work titles are capitalized, though Bukowski often did not capitalize (or wrote ALL CAPS titles).
