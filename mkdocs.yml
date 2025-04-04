@@ -1,4 +1,5 @@
 site_name: Bukowski Database
+site_url: https://bukowskiforum.com/database
 theme:
   name: material
   custom_dir: overrides
@@ -31,15 +32,20 @@ theme:
       accent: deep orange
   features:
     - navigation.instant
+    - navigation.tabs
     - navigation.instant.prefetch
     - navigation.instant.progress 
+    - navigation.indexes
     - navigation.prune
-    - navigation.path
     - content.tooltips
+    - content.action.edit
 plugins:
   - search
   - privacy
   - macros
+
+repo_url: https://github.com/BukowskiForum/bukowskidb
+edit_uri: edit/main/docs/ 
 
 markdown_extensions:
   - admonition
@@ -55,6 +61,7 @@ markdown_extensions:
       toc_depth : "1-1"
 
 extra_javascript:
-  - javascripts/tablesort.date.js
-  - javascripts/tablesort.number.js
+  - https://unpkg.com/tablesort@5.5.0/dist/tablesort.min.js
+  - https://unpkg.com/tablesort@5.5.0/dist/sorts/tablesort.date.min.js
+  - https://unpkg.com/tablesort@5.5.0/dist/sorts/tablesort.number.min.js
   - javascripts/tablesort.js

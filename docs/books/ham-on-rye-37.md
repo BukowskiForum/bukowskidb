@@ -6,7 +6,7 @@ pub_date: 28/7/1982
 publisher: Black Sparrow Press
 genre: prose
 is_major: 'yes'
-notes: null
+notes: Written in San Pedro, CA
 icon: material/typewriter
 ---
 
