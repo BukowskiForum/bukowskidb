@@ -15,7 +15,7 @@ alternate_versions:
 {{ work_info() }}
 {{ notes_section() }}
 ## Texts
-!!! quote ""
+!!! quote "Comparison"
     === "the crunch (Second Coming Magazine, 1977)"
         ```
         Too much

@@ -15,7 +15,7 @@ alternate_versions:
 {{ work_info() }}
 {{ notes_section() }}
 ## Texts
-!!! quote ""
+!!! quote "Comparison"
     === "the crunch (2) (What Matters Most Is How Well You Walk Through The Fire, 1999)"
         ```
         too much

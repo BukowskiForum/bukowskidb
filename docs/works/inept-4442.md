@@ -13,7 +13,7 @@ alternate_versions: []
 {{ work_info() }}
 {{ notes_section() }}
 ## Texts
-!!! quote "inept (LA Weekly - http://bukowski.net/forum/showthread.php?2775-quot-Lost-and-Unbound-quot-LA-Weekly-1996, 1996)"
+!!! quote "inept (LA Weekly - 1996)"
     ```
     everything is inept everywhere,
     see torn butterflies
