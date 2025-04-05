@@ -562,7 +562,7 @@ def define_env(env):
     def generate_index(section="books"):
         """
         Aggregates metadata for a given section and returns a Markdown-formatted table.
-        Handles special characters in titles by using HTML for links when needed.
+        Handles special characters in titles by escaping them for Markdown links.
         """
         docs_dir = env.conf.get("docs_dir", "docs")
         paths = get_content_paths(docs_dir)
@@ -607,24 +607,22 @@ def define_env(env):
             if filename.endswith(".md"):
                 filepath = os.path.join(section_dir, filename)
                 metadata = read_work_metadata(filepath)
-                # Create a relative link to the page by removing the .md extension
-                # MkDocs will handle resolving this to the correct directory URL
-                relative_link = os.path.splitext(filename)[0]
+                # Keep the .md extension for MkDocs initial link resolution
+                relative_link = filename 
                 
-                # Function to safely create a title link
+                # Updated function to always use Markdown links and escape problematic characters
                 def create_safe_link(title, link):
-                    # Check if title contains problematic characters
-                    if any(c in title for c in "[]()"):
-                        # Use HTML <a> tag when special characters are present
-                        return f"<a href='{link}'>{html.escape(title)}</a>"
-                    else:
-                        # Use regular Markdown for simple titles
-                        return f"[{title}]({link})"
+                    # Escape '[' and ']' within the link text part to avoid breaking Markdown syntax
+                    # Parentheses generally don't need escaping within the link text.
+                    escaped_title = title.replace('[', '\\[').replace(']', '\\]')
+                    # Always return a standard Markdown link
+                    return f"[{escaped_title}]({link})"
                 
                 if section.lower() == "books":
                     book_id = str(metadata.get("book_id", "")).strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("book_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     genre = str(metadata.get("genre", "")).strip()
@@ -641,8 +639,9 @@ def define_env(env):
                     row = f"| {title_link} | {pub_date} | {publisher} | {genre} | {book_id} | {major} |"
                 elif section.lower() == "magazines":
                     mag_id = str(metadata.get("magazine_id") or "").strip()
+                    # Use the original title for display, but escape it for the link
                     title = (str(metadata.get("magazine_title") or "").strip() or os.path.splitext(filename)[0])
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     # Use pub_date1 if available, otherwise use pub_date
                     pub_date = str(metadata.get("pub_date1") or metadata.get("pub_date") or "").strip()
                     month = str(metadata.get("month") or "").strip()
@@ -651,30 +650,34 @@ def define_env(env):
                     row = f"| {title_link} | {pub_date} | {month} | {volume} | {number} | {mag_id} |"
                 elif section.lower() == "broadsides":
                     broad_id = str(metadata.get("broadside_id", "")).strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("broadside_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     row = f"| {title_link} | {pub_date} | {publisher} | {broad_id} |"
                 elif section.lower() == "manuscripts":
                     ms_id = str(metadata.get("manuscript_id", "")).strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("manuscript_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     date_field = str(metadata.get("dated", "") or metadata.get("circa", "")).strip()
                     ms_type = str(metadata.get("manuscript_type", "")).strip()
                     row = f"| {title_link} | {date_field} | {ms_type} | {ms_id} |"
                 elif section.lower() == "recordings":
                     rec_id = str(metadata.get("recording_id", "")).strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("recording_event", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     rec_date = str(metadata.get("recording_date", "")).strip()
                     releases = metadata.get("releases", [])
                     releases_count = str(len(releases)) if releases else "0"
                     row = f"| {title_link} | {rec_date} | {releases_count} | {rec_id} |"
                 elif section.lower() == "works":
                     work_id = str(metadata.get("work_id", "") if metadata.get("work_id") is not None else "").strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("work_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     work_written = str(metadata.get("work_written", "") if metadata.get("work_written") is not None else "").strip()
                     
                     # Updated collected field with hidden sort value:
@@ -699,8 +702,9 @@ def define_env(env):
                     row = f"| {title_link} | {work_written} | {category} | {work_id} | {collected} | {manuscript} |"
                 else:
                     identifier = str(metadata.get("id", "")).strip()
+                    # Use the original title for display, but escape it for the link
                     title = str(metadata.get("title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link)
+                    title_link = create_safe_link(title, relative_link) # Use the updated function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     row = f"| {title_link} | {pub_date} | {publisher} | {identifier} |"
