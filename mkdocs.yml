@@ -42,6 +42,7 @@ plugins:
   - search
   - privacy
   - macros
+  - awesome-nav
 
 repo_url: https://github.com/BukowskiForum/bukowskidb
 edit_uri: edit/main/docs/ 

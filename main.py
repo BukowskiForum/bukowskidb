@@ -607,8 +607,9 @@ def define_env(env):
             if filename.endswith(".md"):
                 filepath = os.path.join(section_dir, filename)
                 metadata = read_work_metadata(filepath)
-                # Create a relative link to the page by appending the .md extension
-                relative_link = f"{os.path.splitext(filename)[0]}.md"
+                # Create a relative link to the page by removing the .md extension
+                # MkDocs will handle resolving this to the correct directory URL
+                relative_link = os.path.splitext(filename)[0]
                 
                 # Function to safely create a title link
                 def create_safe_link(title, link):
