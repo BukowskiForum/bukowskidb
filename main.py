@@ -583,7 +583,7 @@ def define_env(env):
         elif section.lower() == "recordings":
             headers = ["Title", "Recording Date", "Releases", "Internal ID"]
         elif section.lower() == "works":
-            headers = ["Title", "Work Written", "Written Date", "Category", "Internal ID", "Collected", "Manuscript"]
+            headers = ["Title", "Work Written", "Category", "Internal ID", "Collected", "Manuscript"]
         else:
             headers = ["Title", "Publication Date", "Publisher", "Internal ID"]
         
@@ -675,7 +675,6 @@ def define_env(env):
                     title = str(metadata.get("work_title", "")).strip() or os.path.splitext(filename)[0]
                     title_link = create_safe_link(title, relative_link)
                     work_written = str(metadata.get("work_written", "") if metadata.get("work_written") is not None else "").strip()
-                    written_date = str(metadata.get("written_date", "") if metadata.get("written_date") is not None else "").strip()
                     
                     # Updated collected field with hidden sort value:
                     collected_raw = metadata.get("work_collected", "no")
@@ -696,7 +695,7 @@ def define_env(env):
                         )
                     else:
                         manuscript = "<span style='display:none' data-sort='0'>0</span>"
-                    row = f"| {title_link} | {work_written} | {written_date} | {category} | {work_id} | {collected} | {manuscript} |"
+                    row = f"| {title_link} | {work_written} | {category} | {work_id} | {collected} | {manuscript} |"
                 else:
                     identifier = str(metadata.get("id", "")).strip()
                     title = str(metadata.get("title", "")).strip() or os.path.splitext(filename)[0]
