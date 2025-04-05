@@ -164,7 +164,7 @@ def define_env(env):
             return "Error: Cannot access works directory."
 
         lines = []
-        lines.append(f"## Works in this {content_type}")
+        lines.append(f"## Works in this {content_type} {{ data-search-exclude }}")
         
         for work in works_included:
             work_id = str(work.get("work_id", ""))
