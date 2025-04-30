@@ -12,8 +12,8 @@ permissions:
 
 env:
   # Remote install location and owner – edit if necessary
-  TARGET_DIR: /public/database
-  TARGET_OWNER: nginx:nginx      # e.g. www-data:www-data, or your own user
+  TARGET_DIR: ${{ secrets.TARGET_DIR }}
+  TARGET_OWNER: ${{ secrets.TARGET_OWNER }}
 
 jobs:
   build-and-deploy:
