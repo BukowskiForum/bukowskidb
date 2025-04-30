@@ -38,6 +38,7 @@ theme:
     - navigation.prune
     - content.tooltips
     - content.action.edit
+
 plugins:
   - search
   - privacy

@@ -43,15 +43,16 @@ jobs:
       - name: Build bukowski database
         run: mkdocs build --clean        # output ends up in ./site
 
-      # 6) Deploy the ./site folder via FTP
-      - name: Upload via FTP
+      # 6) Deploy the ./site folder via FTPS
+      - name: Upload via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server:      ${{ secrets.BUKOWSKIFORUM_HOST }}
           username:    ${{ secrets.BUKOWSKIFORUM_USER }}
           password:    ${{ secrets.BUKOWSKIFORUM_PASS }}
-          protocol:    ftp
+          protocol:    ftps
           port:        21
           local-dir:   ./site/
           server-dir:  /public/database/
+          security:    loose
           dangerous-clean-slate: false

@@ -2,7 +2,6 @@ import os
 import datetime
 import re
 import yaml
-import html  # Added for HTML escaping
 
 # This script is used to generate markdown docs for the "Bukowski Database" 
 # It reads each file's frontmatter and spits out some formatted content. 
@@ -710,6 +709,74 @@ def define_env(env):
                     row = f"| {title_link} | {pub_date} | {publisher} | {identifier} |"
                 rows.append(row)
         
+        return "\n".join(rows)
+
+    @env.macro
+    def generate_letter_index():
+        """
+        Generates a Markdown table index for letter images stored in the manuscripts folder.
+        """
+        docs_dir = env.conf.get("docs_dir", "docs")
+        # Letters are stored in the manuscripts directory
+        manuscripts_dir = os.path.join(docs_dir, "manuscripts")
+
+        if not os.path.exists(manuscripts_dir):
+            return "**Error:** Manuscripts directory not found."
+
+        letters = []
+        # Updated Regex to handle optional numbers and different extensions
+        pattern = re.compile(
+            r"^letter(\d{4})-(\d{2})-(\d{2})-(?:(\d+)-)?(.+?)(?:-(\d+))?\.(jpg|png)$",
+            re.IGNORECASE
+        )
+
+        try:
+            # List all files in the manuscripts directory
+            files = os.listdir(manuscripts_dir)
+        except Exception as e:
+            return f"**Error:** Unable to list files in '{manuscripts_dir}': {e}"
+
+        for filename in files:
+            match = pattern.match(filename)
+            if match:
+                # Groups: year, month, day, (optional_num_before), correspondent, (optional_num_after), extension
+                year, month, day, _, correspondent_raw, _, _ = match.groups()
+                date_str = f"{year}-{month}-{day}" # Keep ISO format for sorting and display
+                # Clean up correspondent name: remove potential trailing numbers handled by regex,
+                # replace hyphens/underscores with spaces, strip whitespace, and capitalize
+                correspondent = correspondent_raw.replace('-', ' ').replace('_', ' ').strip().title()
+                # Construct the relative path from docs/letters/index.md to the image
+                relative_link = f"../manuscripts/{filename}"
+                letters.append({
+                    "date": date_str,
+                    "correspondent": correspondent,
+                    "link": relative_link,
+                    "filename": filename # Store the original filename
+                })
+
+        if not letters:
+            return "No letters found matching the pattern 'letterYYYY-MM-DD...'."
+
+        # Sort letters chronologically by date string
+        letters.sort(key=lambda x: x["date"])
+
+        # Build the Markdown table
+        rows = []
+        # Updated headers to include Filename
+        headers = ["Date", "Correspondent", "Filename"]
+        header_row = "| " + " | ".join(headers) + " |"
+        divider_row = "| " + " | ".join(["---"] * len(headers)) + " |"
+        rows.append(header_row)
+        rows.append(divider_row)
+
+        for letter in letters:
+            # Make the filename the link
+            filename_link = f"[{letter['filename']}]({letter['link']})"
+            # Updated row structure with filename link
+            row = f"| {letter['date']} | {letter['correspondent']} | {filename_link} |"
+            rows.append(row)
+
+        # Join all rows into a single Markdown string
         return "\n".join(rows)
 
 ############################# Utility functions #############################
