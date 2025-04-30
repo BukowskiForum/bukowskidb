@@ -83,25 +83,33 @@ jobs:
           key:       ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
           port: 22
 
-          # forward them to the remote shell
-          envs: TARGET_DIR,TARGET_OWNER
-          envs_format: 'export %s="%s";'   # OK now that vars are not empty
-
           script: |
             set -e
-            echo "Deploying to $TARGET_DIR"
+            # Use GitHub Actions expression syntax to embed env vars directly
+            # Note: Ensure TARGET_DIR and TARGET_OWNER are defined in the top-level 'env:' block
+            TARGET_DIR_REMOTE="${{ env.TARGET_DIR }}"
+            TARGET_OWNER_REMOTE="${{ env.TARGET_OWNER }}"
 
-            sudo rm -rf "${TARGET_DIR}.new"
-            sudo mkdir -p "${TARGET_DIR}.new"
-            sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR}.new"
-            sudo chown -R "${TARGET_OWNER}" "${TARGET_DIR}.new"
-
-            if [ -d "${TARGET_DIR}" ]; then
-              sudo mv "${TARGET_DIR}" "${TARGET_DIR}.old"
+            # Check if variables are empty (optional but good practice)
+            if [ -z "$TARGET_DIR_REMOTE" ] || [ -z "$TARGET_OWNER_REMOTE" ]; then
+              echo "Error: TARGET_DIR or TARGET_OWNER is empty." >&2
+              exit 1
             fi
-            sudo mv "${TARGET_DIR}.new" "${TARGET_DIR}"
 
-            sudo rm -rf "${TARGET_DIR}.old"
+            echo "Deploying to $TARGET_DIR_REMOTE"
+
+            # Use the variables defined above
+            sudo rm -rf "${TARGET_DIR_REMOTE}.new"
+            sudo mkdir -p "${TARGET_DIR_REMOTE}.new"
+            sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR_REMOTE}.new"
+            sudo chown -R "${TARGET_OWNER_REMOTE}" "${TARGET_DIR_REMOTE}.new"
+
+            if [ -d "${TARGET_DIR_REMOTE}" ]; then
+              sudo mv "${TARGET_DIR_REMOTE}" "${TARGET_DIR_REMOTE}.old"
+            fi
+            sudo mv "${TARGET_DIR_REMOTE}.new" "${TARGET_DIR_REMOTE}"
+
+            sudo rm -rf "${TARGET_DIR_REMOTE}.old"
             sudo rm -f  /tmp/bukowski_database.tar.gz
 
             echo "✅  Deploy complete"
