@@ -1,4 +1,4 @@
-name: Build & FTP Deploy MkDocs Site
+name: Build Bukowski Database & Deploy via FTP
 # this bad boy is too big to host on GitHub Pages, cloudflare, or any free service,so we're deploying to our own server
 
 on:
@@ -40,7 +40,7 @@ jobs:
           pip install -r requirements.txt
 
       # 5) Build the static site
-      - name: Build MkDocs site
+      - name: Build bukowski database
         run: mkdocs build --clean        # output ends up in ./site
 
       # 6) Deploy the ./site folder via FTP

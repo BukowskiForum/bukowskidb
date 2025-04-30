@@ -2,3 +2,4 @@
    mkdocs-material
    pymdown-extensions
    mkdocs-macros-plugin
+   mkdocs-awesome-nav

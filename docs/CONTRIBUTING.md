@@ -109,6 +109,11 @@ works_included:
 ```
 {% endraw %}
 
+### Letters
+
+Add the letter to the `docs/manuscripts` folder. The filename should follow the format `letterYYYY-MM-DD-correspondent.jpg`
+There's nothing else needed for letters.
+
 ### Magazines
 
 {% raw %}
