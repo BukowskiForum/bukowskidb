@@ -79,27 +79,34 @@ jobs:
       - name: Extract and swap on server
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.BUKOWSKIFORUM_HOST }}
-          username: ${{ secrets.BUKOWSKIFORUM_USER }}
-          key: ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
+          host:      ${{ secrets.BUKOWSKIFORUM_HOST }}
+          username:  ${{ secrets.BUKOWSKIFORUM_USER }}
+          key:       ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
           port: 22
+
+          # 1️⃣  forward the two variables to the remote host
+          envs: TARGET_DIR,TARGET_OWNER
+          # (optional) tweak how they are exported on the other side
+          envs_format: 'export %s="%s";'
+
           script: |
             set -e
             echo "Deploying to $TARGET_DIR"
+
             # Clean up any previous temp dir
-            rm -rf ${TARGET_DIR}.new
-            mkdir -p ${TARGET_DIR}.new
-            tar -xzf /tmp/bukowski_database.tar.gz -C ${TARGET_DIR}.new
-            chown -R ${TARGET_OWNER} ${TARGET_DIR}.new
+            sudo rm -rf "${TARGET_DIR}.new"
+            sudo mkdir -p "${TARGET_DIR}.new"
+            sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR}.new"
+            sudo chown -R "${TARGET_OWNER}" "${TARGET_DIR}.new"
 
             # Atomic swap (fallback keeps the old version)
-            if [ -d ${TARGET_DIR} ]; then
-              mv ${TARGET_DIR} ${TARGET_DIR}.old
+            if [ -d "${TARGET_DIR}" ]; then
+              sudo mv "${TARGET_DIR}" "${TARGET_DIR}.old"
             fi
-            mv ${TARGET_DIR}.new ${TARGET_DIR}
+            sudo mv "${TARGET_DIR}.new" "${TARGET_DIR}"
 
             # Optional: remove the previous version
-            rm -rf ${TARGET_DIR}.old
-            rm -f /tmp/bukowski_database.tar.gz
+            sudo rm -rf "${TARGET_DIR}.old"
+            sudo rm -f  /tmp/bukowski_database.tar.gz
 
             echo "✅  Deploy complete"
