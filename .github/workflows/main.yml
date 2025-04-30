@@ -10,14 +10,13 @@ on:
 permissions:
   contents: read
 
-env:
-  # Remote install location and owner – edit if necessary
-  TARGET_DIR: ${{ secrets.TARGET_DIR }}
-  TARGET_OWNER: ${{ secrets.TARGET_OWNER }}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      TARGET_DIR:   ${{ secrets.TARGET_DIR }}
+      TARGET_OWNER: ${{ secrets.TARGET_OWNER }}
 
     steps:
       # 1) Checkout source
@@ -84,28 +83,24 @@ jobs:
           key:       ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
           port: 22
 
-          # 1️⃣  forward the two variables to the remote host
+          # forward them to the remote shell
           envs: TARGET_DIR,TARGET_OWNER
-          # (optional) tweak how they are exported on the other side
-          envs_format: 'export %s="%s";'
+          envs_format: 'export %s="%s";'   # OK now that vars are not empty
 
           script: |
             set -e
             echo "Deploying to $TARGET_DIR"
 
-            # Clean up any previous temp dir
             sudo rm -rf "${TARGET_DIR}.new"
             sudo mkdir -p "${TARGET_DIR}.new"
             sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR}.new"
             sudo chown -R "${TARGET_OWNER}" "${TARGET_DIR}.new"
 
-            # Atomic swap (fallback keeps the old version)
             if [ -d "${TARGET_DIR}" ]; then
               sudo mv "${TARGET_DIR}" "${TARGET_DIR}.old"
             fi
             sudo mv "${TARGET_DIR}.new" "${TARGET_DIR}"
 
-            # Optional: remove the previous version
             sudo rm -rf "${TARGET_DIR}.old"
             sudo rm -f  /tmp/bukowski_database.tar.gz
 
