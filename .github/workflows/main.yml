@@ -1,4 +1,5 @@
-name: Build Bukowski Database & Deploy via FTP
+# Build Bukowski Database & Deploy via SSH
+name: Build Bukowski Database & Deploy via SSH
 # this bad boy is too big to host on GitHub Pages, cloudflare, or any free service,so we're deploying to our own server
 
 on:
@@ -8,6 +9,11 @@ on:
 
 permissions:
   contents: read
+
+env:
+  # Remote install location and owner – edit if necessary
+  TARGET_DIR: /public/database
+  TARGET_OWNER: nginx:nginx      # e.g. www-data:www-data, or your own user
 
 jobs:
   build-and-deploy:
@@ -43,16 +49,57 @@ jobs:
       - name: Build bukowski database
         run: mkdocs build --clean        # output ends up in ./site
 
-      # 6) Deploy the ./site folder via FTPS
-      - name: Upload via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # 6) Create a tar.gz archive of the build
+      - name: Compress artefact
+        run: |
+          tar -czf bukowski_database.tar.gz -C site .
+
+      ####################################################################
+      #  SSH section – copy archive & unpack remotely
+      ####################################################################
+
+      # 7) Start ssh-agent with the private key stored in Secrets
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.1
         with:
-          server:      ${{ secrets.BUKOWSKIFORUM_HOST }}
-          username:    ${{ secrets.BUKOWSKIFORUM_USER }}
-          password:    ${{ secrets.BUKOWSKIFORUM_PASS }}
-          protocol:    ftps
-          port:        21
-          local-dir:   ./site/
-          server-dir:  /public/database/
-          security:    loose
-          dangerous-clean-slate: false
+          ssh-private-key: ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
+
+      # 8) (optional) Pre-accept host key to avoid the prompt
+      - name: Add host to known_hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.BUKOWSKIFORUM_HOST }} >> ~/.ssh/known_hosts
+
+      # 9) Copy the archive over
+      - name: Copy archive via scp
+        run: |
+          scp -o StrictHostKeyChecking=no bukowski_database.tar.gz \
+              ${{ secrets.BUKOWSKIFORUM_USER }}@${{ secrets.BUKOWSKIFORUM_HOST }}:/tmp/
+
+      # 10) Run remote commands: unpack, chown, atomic swap
+      - name: Extract and swap on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.BUKOWSKIFORUM_HOST }}
+          username: ${{ secrets.BUKOWSKIFORUM_USER }}
+          key: ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+            echo "Deploying to $TARGET_DIR"
+            # Clean up any previous temp dir
+            rm -rf ${TARGET_DIR}.new
+            mkdir -p ${TARGET_DIR}.new
+            tar -xzf /tmp/bukowski_database.tar.gz -C ${TARGET_DIR}.new
+            chown -R ${TARGET_OWNER} ${TARGET_DIR}.new
+
+            # Atomic swap (fallback keeps the old version)
+            if [ -d ${TARGET_DIR} ]; then
+              mv ${TARGET_DIR} ${TARGET_DIR}.old
+            fi
+            mv ${TARGET_DIR}.new ${TARGET_DIR}
+
+            # Optional: remove the previous version
+            rm -rf ${TARGET_DIR}.old
+            rm -f /tmp/bukowski_database.tar.gz
+
+            echo "✅  Deploy complete"
