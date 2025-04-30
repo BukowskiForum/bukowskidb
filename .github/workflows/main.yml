@@ -50,9 +50,8 @@ jobs:
           server:      ${{ secrets.BUKOWSKIFORUM_HOST }}
           username:    ${{ secrets.BUKOWSKIFORUM_USER }}
           password:    ${{ secrets.BUKOWSKIFORUM_PASS }}
-          protocol:    ftp               # (default) can be sftp if your host allows it
-          port:        21                # change if your host uses a different port
-          local-dir:   ./site            # what to upload
-          server-dir:  /public/database/ # where to upload it
-          # Set to true if you want to wipe remote dir before upload
+          protocol:    ftp
+          port:        21
+          local-dir:   ./site/
+          server-dir:  /public/database/
           dangerous-clean-slate: false
