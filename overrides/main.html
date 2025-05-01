@@ -45,14 +45,14 @@
 
         {# --- MAGAZINES --- #}
         {% elif page.url.startswith('magazines/') and page.meta.magazine_title %}
-            {# WorldCat Link for Holdings #}
-            {% set title_wc = page.meta.magazine_title.replace(" ", "+") %}
-            {% set worldcat_url = "https://www.worldcat.org/search?q=ti%3A" ~ title_wc %}
-            <li><a href="{{ worldcat_url }}" target="_blank" rel="noopener">Search libraries for "{{ page.meta.magazine_title }}"</a></li>
-            {# Internet Archive Link for Digitized Issues #}
-            {% set title_ia = page.meta.magazine_title | urlencode %}
-            {% set ia_url = "https://archive.org/details/periodicals?tab=collection&query=%22" ~ title_ia ~ "%22" %}
-            <li><a href="{{ ia_url }}" target="_blank" rel="noopener">Search for digitized issues</a></li>
+            {# Anna's Archive — search by title only, limited to magazines #}
+            {% set title_aa = page.meta.magazine_title.replace(" ", "+") %}
+            {% set annas_url = "https://annas-archive.org/search?index=&page=1&q=&display=&termtype_1=title&termval_1=" ~ title_aa ~ "&content=magazine&sort=" %}
+            <li>
+                <a href="{{ annas_url }}" target="_blank" rel="noopener">
+                    Search an open library for "{{ page.meta.magazine_title }}"
+                </a>
+            </li>
         {% endif %}
 
         {# Collector Link - For all relevant types #}
