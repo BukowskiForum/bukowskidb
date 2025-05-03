@@ -87,42 +87,38 @@ jobs:
 
       # Run remote commands: unpack, chown, atomic swap
       - name: Extract and swap on server
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host:      ${{ secrets.BUKOWSKIFORUM_HOST }}
-          username:  ${{ secrets.BUKOWSKIFORUM_USER }}
-          port: 22
-
-          script: |
+        run: |
+          # Run the commands via SSH
+          ssh ${{ secrets.BUKOWSKIFORUM_USER }}@${{ secrets.BUKOWSKIFORUM_HOST }} << 'EOF'
             set -e
-            # Use GitHub Actions expression syntax to embed env vars directly
-            # Note: Ensure TARGET_DIR and TARGET_OWNER are defined in the top-level 'env:' block
-            TARGET_DIR_REMOTE="${{ env.TARGET_DIR }}"
-            TARGET_OWNER_REMOTE="${{ env.TARGET_OWNER }}"
-
-            # Check if variables are empty (optional but good practice)
-            if [ -z "$TARGET_DIR_REMOTE" ] || [ -z "$TARGET_OWNER_REMOTE" ]; then
+            # Use the variables defined in the workflow
+            TARGET_DIR="${{ env.TARGET_DIR }}"
+            TARGET_OWNER="${{ env.TARGET_OWNER }}"
+            
+            # Check if variables are empty
+            if [ -z "$TARGET_DIR" ] || [ -z "$TARGET_OWNER" ]; then
               echo "Error: TARGET_DIR or TARGET_OWNER is empty." >&2
               exit 1
             fi
-
-            echo "Deploying to $TARGET_DIR_REMOTE"
-
-            # Use the variables defined above
-            sudo rm -rf "${TARGET_DIR_REMOTE}.new"
-            sudo mkdir -p "${TARGET_DIR_REMOTE}.new"
-            sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR_REMOTE}.new"
-            sudo chown -R "${TARGET_OWNER_REMOTE}" "${TARGET_DIR_REMOTE}.new"
-
-            if [ -d "${TARGET_DIR_REMOTE}" ]; then
-              sudo mv "${TARGET_DIR_REMOTE}" "${TARGET_DIR_REMOTE}.old"
+            
+            echo "Deploying to $TARGET_DIR"
+            
+            # Deployment commands
+            sudo rm -rf "${TARGET_DIR}.new"
+            sudo mkdir -p "${TARGET_DIR}.new"
+            sudo tar -xzf /tmp/bukowski_database.tar.gz -C "${TARGET_DIR}.new"
+            sudo chown -R "${TARGET_OWNER}" "${TARGET_DIR}.new"
+            
+            if [ -d "${TARGET_DIR}" ]; then
+              sudo mv "${TARGET_DIR}" "${TARGET_DIR}.old"
             fi
-            sudo mv "${TARGET_DIR_REMOTE}.new" "${TARGET_DIR_REMOTE}"
-
-            sudo rm -rf "${TARGET_DIR_REMOTE}.old"
+            sudo mv "${TARGET_DIR}.new" "${TARGET_DIR}"
+            
+            sudo rm -rf "${TARGET_DIR}.old"
             sudo rm -f  /tmp/bukowski_database.tar.gz
-
+            
             echo "✅  Deploy complete"
+          EOF
 
       # Purge Cloudflare cache
       - name: Purge Cloudflare cache
