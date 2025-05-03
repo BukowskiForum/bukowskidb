@@ -25,17 +25,17 @@ jobs:
       TARGET_OWNER: ${{ secrets.TARGET_OWNER }}
 
     steps:
-      # 1) Checkout source
+      # Checkout source
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Prepare Python
+      # Prepare Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      # 3) (optional) Cache pip packages to speed-up subsequent runs
+      # (optional) Cache pip packages to speed-up subsequent runs
       - name: Cache pip packages
         uses: actions/cache@v4
         with:
@@ -44,21 +44,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      # 4) Install MkDocs & plugins
+      # Install MkDocs & plugins
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 5) Generate Discussion Map
+      # Move SSH setup BEFORE map generation
+      # Start ssh-agent
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
+
+      # Generate Discussion Map (after SSH is set up)
       - name: Generate discussion map
         run: python generate_discussion_map.py
 
-      # 6) Build the static site
+      # Build the static site
       - name: Build bukowski database
         run: mkdocs build --clean
 
-      # 7) Create a tar.gz archive of the build
+      # Create a tar.gz archive of the build
       - name: Compress artefact
         run: |
           tar -czf bukowski_database.tar.gz -C site .
@@ -67,24 +74,18 @@ jobs:
       #  SSH section – copy archive & unpack remotely
       ####################################################################
 
-      # 8) Start ssh-agent
-      - name: Start ssh-agent
-        uses: webfactory/ssh-agent@v0.9.1
-        with:
-          ssh-private-key: ${{ secrets.BUKOWSKIFORUM_SSH_KEY }}
-
-      # 9) (optional) Pre-accept host key to avoid the prompt
+      # (optional) Pre-accept host key to avoid the prompt
       - name: Add host to known_hosts
         run: |
           ssh-keyscan -H ${{ secrets.BUKOWSKIFORUM_HOST }} >> ~/.ssh/known_hosts
 
-      # 10) Copy the archive over
+      # Copy the archive over
       - name: Copy archive via scp
         run: |
           scp -o StrictHostKeyChecking=no bukowski_database.tar.gz \
               ${{ secrets.BUKOWSKIFORUM_USER }}@${{ secrets.BUKOWSKIFORUM_HOST }}:/tmp/
 
-      # 11) Run remote commands: unpack, chown, atomic swap
+      # Run remote commands: unpack, chown, atomic swap
       - name: Extract and swap on server
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -123,7 +124,7 @@ jobs:
 
             echo "✅  Deploy complete"
 
-      # 12) Purge Cloudflare cache
+      # Purge Cloudflare cache
       - name: Purge Cloudflare cache
         # Only run if the previous steps were successful
         if: success()
