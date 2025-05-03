@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Big Grey Balloon Things, Heavy" to "Elephants In The Zoo"](https://bukowski.net/comparisons/elephants_in_the_zoo.php)

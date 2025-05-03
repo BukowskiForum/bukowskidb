@@ -330,5 +330,3 @@ alternate_versions:
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The Crunch" to "The Crunch (2)"](https://bukowski.net/comparisons/the_crunch.php)

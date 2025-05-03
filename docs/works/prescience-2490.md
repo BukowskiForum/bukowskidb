@@ -18,5 +18,3 @@ alternate_versions: []
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Prescience"](https://bukowski.net/comparisons/prescience.php)

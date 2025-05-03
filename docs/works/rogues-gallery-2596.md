@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Gallery" to "Rogue's Gallery"](https://bukowski.net/comparisons/gallery.php)

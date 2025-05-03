@@ -19,5 +19,3 @@ alternate_versions:
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "I've Fought Them From The Moment I Saw Light From The Womb" to "I Fought Them From The Moment I Saw Light"](https://bukowski.net/comparisons/Ive_fought_them_from_the_moment_I_saw_light.php)

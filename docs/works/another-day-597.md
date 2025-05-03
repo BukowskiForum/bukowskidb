@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Another Day"](https://bukowski.net/comparisons/another_day.php)

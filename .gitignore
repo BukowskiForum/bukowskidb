@@ -1,6 +1,7 @@
 *.php
 *.sql
 *.inc
+*.log
 /site
 /scripts
 /.cache
@@ -12,3 +13,4 @@ timeline.html
 urlconvert*.py
 url_conversion*
 changedwork*
+data/thread_links.json

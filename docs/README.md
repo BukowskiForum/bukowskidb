@@ -1,9 +1,8 @@
 # Bukowski Database Notes
-- You can (and should) edit this site, even if you've never used git. Read the [contribution guide](CONTRIBUTING.md), and [discuss the database](https://bukowskiforum.com/threads/database-updated.5438/).
-- This database is a gift from Hannah and others mentioned in the original notes below. It was recently converted from php/sql into mkdocs.
-- I attempted to preserve all the data. That includes things I don't quite understand, such as the work label "collected" and book label "major". That also includes things that no longer work, such as soundcloud track ids. Should we keep them? Remove them? Let's discuss.
 
-- The following notes were from the original database, 
+- This is a catalog of the author Charles Bukowski's [books](books/index.md), [broadsides](broadsides/index.md), [letters](letters/index.md), [magazine appearances](magazines/index.md), [manuscripts](manuscripts/index.md), [recordings](recordings/index.md), and [works](works/index.md). It's maintained by [Bukowski Forum](https://bukowskiforum.com) members. 
+- To add or correct information, read the [contribution guide](CONTRIBUTING.md), or [propose changes](https://bukowskiforum.com/threads/database-updated.5438/).
+- Nearly all the content is a gift from Hannah who started the database in 1995, as well as others mentioned in the original notes below.
 
 !!! quote "Old Database Notes"
     - For the sake of consistency the work titles are capitalized, though Bukowski often did not capitalize (or wrote ALL CAPS titles).

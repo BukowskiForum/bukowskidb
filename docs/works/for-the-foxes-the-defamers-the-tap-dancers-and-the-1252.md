@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "For The Foxes, The Defamers, The Tap Dancers, And The Dreamers Of Ballet" to "For The Foxes"](https://bukowski.net/comparisons/for_the_foxes.php)

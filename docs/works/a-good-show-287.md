@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Good Show" to "A Good Show"](https://bukowski.net/comparisons/good_show.php)

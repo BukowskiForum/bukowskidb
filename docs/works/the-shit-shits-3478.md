@@ -18,5 +18,3 @@ alternate_versions: []
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The Shit Shits" to "The Shit Shits (magazine appearance)"](https://bukowski.net/comparisons/the_shit_shits.php)

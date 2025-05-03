@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Again" to "The Shadows"](https://bukowski.net/comparisons/again.php)

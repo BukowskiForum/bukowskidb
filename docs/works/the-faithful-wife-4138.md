@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The Faithful Wife" to "The Faithful Wife (manuscript)"](https://bukowski.net/comparisons/the_faithful_wife.php)

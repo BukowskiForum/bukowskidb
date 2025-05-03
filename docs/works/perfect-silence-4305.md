@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The Perfect Silence" to "Perfect Silence"](https://bukowski.net/comparisons/the_perfect_silence.php)

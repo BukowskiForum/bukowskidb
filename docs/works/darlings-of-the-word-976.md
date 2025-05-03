@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Darlings Of The Word" to "Darlings Of The Word (manuscript)"](https://bukowski.net/comparisons/darlings_of_the_word.php)

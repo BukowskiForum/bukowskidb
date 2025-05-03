@@ -17,5 +17,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "To Weep In Her Hair" to "To Weep" and "To Kiss Her Long Dark Hair"](https://bukowski.net/comparisons/to_weep_in_her_hair.php)

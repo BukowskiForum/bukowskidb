@@ -27,5 +27,3 @@ alternate_versions: []
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "B As In Bullshit" to "B As In Bullshit (magazine appearance)"](https://bukowski.net/comparisons/B-as-in-bullshit.php)

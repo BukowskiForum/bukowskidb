@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The New Revolution" to "The Counter Revolution"](https://bukowski.net/comparisons/the_new_revolution.php)

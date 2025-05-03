@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Do You Want To Enter The Arena?" to "So You Want To Be A Writer"](https://bukowski.net/comparisons/do_you_want_to_enter_the_arena.php)

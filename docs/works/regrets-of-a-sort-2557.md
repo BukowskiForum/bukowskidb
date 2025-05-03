@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Regrets Of A Sort" to "Regrets Of A Sort (manuscript)"](https://bukowski.net/comparisons/regrets_of_a_sort.php)

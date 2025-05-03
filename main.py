@@ -2,6 +2,7 @@ import os
 import datetime
 import re
 import yaml
+import json
 
 # This script is used to generate markdown docs for the "Bukowski Database" 
 # It reads each file's frontmatter and spits out some formatted content. 
@@ -17,16 +18,28 @@ _WORK_ID_CACHE = {}
 _MANUSCRIPT_CACHE = {}
 # Cache for manuscripts containing a specific work
 _MANUSCRIPT_WORK_MAP = {}
+# Store thread links at module level
+_THREAD_LINKS = {}
 
 ### Macros for embedding in markdown docs ###
 
 # Universal "title" macro
 def define_env(env):
     # Initialize cache at the start of environment setup
-    global _METADATA_CACHE
+    global _METADATA_CACHE, _THREAD_LINKS
     if not _METADATA_CACHE:
         _METADATA_CACHE = {}
     
+    # Load thread links data once at startup with explicit encoding
+    try:
+        with open('data/thread_links.json', 'r', encoding='utf-8') as f:
+            _THREAD_LINKS = json.load(f)
+            env.variables.thread_links = _THREAD_LINKS
+    except Exception as e:
+        print(f"ERROR loading thread links: {str(e)}")
+        _THREAD_LINKS = {}
+        env.variables.thread_links = {}
+
     @env.macro
     def section_title():
         # Prioritize handling works if a specific work title is provided.
@@ -1044,3 +1057,55 @@ def check_manuscript_altered(work_id, docs_dir):
     
     _MANUSCRIPT_CACHE[work_id] = icon
     return icon
+
+# MODULE LEVEL HOOK - This must be OUTSIDE define_env
+def on_post_page_macros(env):
+    """
+    Post-page hook that runs after macros have been rendered
+    This is where we inject discussion links into the page metadata
+    """
+    
+    # Call the inject_discussion_links function
+    if hasattr(env, 'page') and env.page:
+        inject_discussion_links(env.page)
+    else:
+        print("DEBUG: env.page not available in on_post_page_macros")
+    
+    return env.markdown
+
+# This helper function is called by on_post_page_macros
+def inject_discussion_links(page):
+    """Sets discussion links in page meta for template access"""
+    # Access the global thread links data
+    if not _THREAD_LINKS:
+        return
+    
+    # Determine content type and ID from URL structure
+    url_parts = page.url.strip('/').split('/')
+    if len(url_parts) < 1:
+        return
+    
+    content_type = url_parts[0]
+    
+    # Define valid types and corresponding ID keys
+    valid_types_and_keys = {
+        'works': 'work_id',
+        'books': 'book_id',
+        'magazines': 'magazine_id',
+        'manuscripts': 'manuscript_id',
+        'recordings': 'recording_id',
+        'broadsides': 'broadside_id'
+    }
+    
+    if content_type in valid_types_and_keys:
+        id_key = valid_types_and_keys[content_type]
+        # Ensure page.meta exists before trying to access it
+        if hasattr(page, 'meta') and page.meta:
+            content_id = str(page.meta.get(id_key, ""))
+            
+            if content_id:
+                lookup_key = f"{content_type}/{content_id}"
+                
+                # Store in page meta for template access
+                found_links = _THREAD_LINKS.get(lookup_key, [])
+                page.meta['discussion_links'] = found_links

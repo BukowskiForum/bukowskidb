@@ -15,5 +15,3 @@ alternate_versions: []
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "I'm A Failure" to "I'm A Failure (manuscript)"](https://bukowski.net/comparisons/Im_a_failure.php)

@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Secret Laughter Shining" to "Secret Laughter"](https://bukowski.net/comparisons/secret_laughter.php)

@@ -1,5 +1,8 @@
-   pyyaml
-   mkdocs-material
-   pymdown-extensions
-   mkdocs-macros-plugin
-   mkdocs-awesome-nav
+pyyaml
+mkdocs-material
+pymdown-extensions
+mkdocs-macros-plugin
+mkdocs-awesome-nav
+mkdocs
+sshtunnel
+pymysql

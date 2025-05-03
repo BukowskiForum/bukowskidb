@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Bright Boy" to "A Bright Boy"](https://bukowski.net/comparisons/bright_boy.php)

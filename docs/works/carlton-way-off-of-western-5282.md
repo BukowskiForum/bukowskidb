@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Carlton Way Off Of Western" to "Carlton Way Off Western Ave."](https://bukowski.net/comparisons/carlton_way_off_of_western.php)

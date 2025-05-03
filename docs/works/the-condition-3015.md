@@ -16,5 +16,3 @@ alternate_versions:
 {{ notes_section() }}
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "The Condition" to "The Condition (manuscript)" and "The Continual Condition"](https://bukowski.net/comparisons/the_condition.php)

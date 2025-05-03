@@ -27,5 +27,3 @@ alternate_versions: []
 
 {{ appearances_section() }}
 {{ alternate_versions_section() }}
-## Comparisons
-- [Compare "Disgusting" to "Disgusting (magazine version)"](https://bukowski.net/comparisons/disgusting.php)
