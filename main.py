@@ -221,7 +221,9 @@ def define_env(env):
             
             # Build the line with proper badge placement
             badges_str = " " + " ".join(badges) if badges else ""
-            lines.append(f"- [{work_title}]({relative_link}){badges_str}{page_info}{published_as}{date_part}")
+            # Use create_safe_link for the work title
+            link_markdown = create_safe_link(work_title, relative_link)
+            lines.append(f"- {link_markdown}{badges_str}{page_info}{published_as}{date_part}")
             
         return "\n".join(lines)
 
@@ -456,9 +458,11 @@ def define_env(env):
                 continue
             result.append(f"## {section_titles[content_type]}")
             for item in items:
-                # Format a basic link; further formatting can be done per type if needed.
-                link = f"[{item['title']}](../{item['directory']}/{item['filename']})"
-                line = f"- {link}"
+                # Format a basic link using create_safe_link; further formatting can be done per type if needed.
+                link_url = f"../{item['directory']}/{item['filename']}"
+                link_text = item['title']
+                link_markdown = create_safe_link(link_text, link_url) # Use create_safe_link here
+                line = f"- {link_markdown}"
                 # Optionally append extra info for different content types
                 if content_type == "Magazines":
                     # Start building the magazine info
@@ -564,7 +568,9 @@ def define_env(env):
             if match_file:
                 title = get_work_title(metadata, match_file)
                 relative_link = f"../works/{match_file}"
-                lines.append(f"- [{title}]({relative_link})")
+                # Use create_safe_link for the alternate version link
+                link_markdown = create_safe_link(title, relative_link)
+                lines.append(f"- {link_markdown}")
             else:
                 lines.append(f"- Work with ID {work_id}")
         
@@ -634,7 +640,7 @@ def define_env(env):
                     book_id = str(metadata.get("book_id", "")).strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("book_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     genre = str(metadata.get("genre", "")).strip()
@@ -653,7 +659,7 @@ def define_env(env):
                     mag_id = str(metadata.get("magazine_id") or "").strip()
                     # Use the original title for display, but escape it for the link
                     title = (str(metadata.get("magazine_title") or "").strip() or os.path.splitext(filename)[0])
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     # Use pub_date1 if available, otherwise use pub_date
                     pub_date = str(metadata.get("pub_date1") or metadata.get("pub_date") or "").strip()
                     month = str(metadata.get("month") or "").strip()
@@ -664,7 +670,7 @@ def define_env(env):
                     broad_id = str(metadata.get("broadside_id", "")).strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("broadside_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     row = f"| {title_link} | {pub_date} | {publisher} | {broad_id} |"
@@ -672,7 +678,7 @@ def define_env(env):
                     ms_id = str(metadata.get("manuscript_id", "")).strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("manuscript_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     date_field = str(metadata.get("dated", "") or metadata.get("circa", "")).strip()
                     ms_type = str(metadata.get("manuscript_type", "")).strip()
                     row = f"| {title_link} | {date_field} | {ms_type} | {ms_id} |"
@@ -680,7 +686,7 @@ def define_env(env):
                     rec_id = str(metadata.get("recording_id", "")).strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("recording_event", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     rec_date = str(metadata.get("recording_date", "")).strip()
                     releases = metadata.get("releases", [])
                     releases_count = str(len(releases)) if releases else "0"
@@ -689,7 +695,7 @@ def define_env(env):
                     work_id = str(metadata.get("work_id", "") if metadata.get("work_id") is not None else "").strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("work_title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     work_written = str(metadata.get("work_written", "") if metadata.get("work_written") is not None else "").strip()
                     
                     # Updated collected field with hidden sort value:
@@ -716,7 +722,7 @@ def define_env(env):
                     identifier = str(metadata.get("id", "")).strip()
                     # Use the original title for display, but escape it for the link
                     title = str(metadata.get("title", "")).strip() or os.path.splitext(filename)[0]
-                    title_link = create_safe_link(title, relative_link) # Use the updated function
+                    title_link = create_safe_link(title, relative_link) # Use the global function
                     pub_date = str(metadata.get("pub_date", "")).strip()
                     publisher = str(metadata.get("publisher", "")).strip()
                     row = f"| {title_link} | {pub_date} | {publisher} | {identifier} |"
@@ -794,6 +800,14 @@ def define_env(env):
 
 ############################# Utility functions #############################
 
+def create_safe_link(title, link):
+    """
+    Creates a Markdown link, escaping problematic characters '[' and ']' in the title.
+    """
+    # Escape '[' and ']' within the link text part to avoid breaking Markdown syntax
+    escaped_title = title.replace('[', '\\[').replace(']', '\\]')
+    # Always return a standard Markdown link
+    return f"[{escaped_title}]({link})"
 
 def read_work_metadata(filepath):
     """

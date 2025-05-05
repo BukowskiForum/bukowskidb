@@ -109,11 +109,6 @@ works_included:
 ```
 {% endraw %}
 
-### Letters
-
-Add the letter to the `docs/manuscripts` folder. The filename should follow the format `letterYYYY-MM-DD-correspondent.jpg`
-There's nothing else needed for letters.
-
 ### Magazines
 
 {% raw %}
@@ -256,10 +251,13 @@ alternate_versions:
 
 After you fill in the fields, commit the changes and create a pull request for moderator review.
 
+### Letters
+
+Letters we store as simple images, no other file is needed. Add the letter to the `docs/manuscripts` folder. The filename should follow the format `letterYYYY-MM-DD-correspondent.jpg`, nothing else required.
+
 ## Technical details
 - In general, `main.py` holds the logic, design and markup of the site.
 - The markdown files, such as `docs/books/ham-on-rye-37.md`, contain the content. 
-    (There are exceptions, and there's a tiny bit of templating in `overrides/main.html` but for the most part that's how it works.)
+    (There are exceptions, and there's a bit of templating in `overrides/main.html` but for the most part that's how it works.)
 - You can run the site locally by following instructions at [mkdocs material](https://squidfunk.github.io/mkdocs-material/getting-started/).
-- The site is too big to host on github pages or equivalents, so I need to customize the deployment process.
 - I'm happy to accept pull requests for big things such as design and structure changes. Let's talk about it on the forum before you put in the work.
